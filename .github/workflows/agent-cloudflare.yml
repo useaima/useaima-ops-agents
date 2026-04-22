@@ -1,0 +1,28 @@
+name: Agent Cloudflare Specialist
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npm run agent:run -- --agent cloudflare-specialist
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          AUTONOMY_MODE: ${{ vars.AUTONOMY_MODE }}
+          AGENT_KILL_SWITCH: ${{ vars.AGENT_KILL_SWITCH }}
+          ALERT_REPO: ${{ vars.ALERT_REPO }}
+          ALERT_REPO_OWNER: ${{ vars.ALERT_REPO_OWNER }}
+          CLOUDFLARE_ZONE_USEAIMA: ${{ vars.CLOUDFLARE_ZONE_USEAIMA }}
+          CLOUDFLARE_ZONE_BLOG: ${{ vars.CLOUDFLARE_ZONE_BLOG }}

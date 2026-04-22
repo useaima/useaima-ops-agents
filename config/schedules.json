@@ -1,0 +1,8 @@
+{
+  "devops-lead": "every 15 minutes",
+  "cloudflare-specialist": "every 30 minutes",
+  "security-ops": "hourly",
+  "vulnerability-scanner": "daily",
+  "iam": "daily",
+  "finops": "daily"
+}

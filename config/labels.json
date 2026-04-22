@@ -1,0 +1,28 @@
+{
+  "agent": [
+    "agent:devops-lead",
+    "agent:cloudflare-specialist",
+    "agent:finops",
+    "agent:security-ops",
+    "agent:vulnerability-scanner",
+    "agent:iam"
+  ],
+  "system": [
+    "system:github",
+    "system:vercel",
+    "system:supabase",
+    "system:cloudflare"
+  ],
+  "severity": [
+    "severity:low",
+    "severity:medium",
+    "severity:high",
+    "severity:critical"
+  ],
+  "status": [
+    "status:open",
+    "status:acting",
+    "status:resolved",
+    "status:muted"
+  ]
+}

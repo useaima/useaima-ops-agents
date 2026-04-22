@@ -1,0 +1,51 @@
+{
+  "defaultAutonomyMode": "active",
+  "issueRepo": {
+    "owner": "useaima",
+    "repo": "useaima-ops-agents"
+  },
+  "allowedActions": {
+    "devops-lead": [
+      "create_issue",
+      "rerun_workflow",
+      "trigger_vercel_redeploy"
+    ],
+    "cloudflare-specialist": [
+      "create_issue",
+      "purge_cloudflare_cache",
+      "patch_cloudflare_dns"
+    ],
+    "finops": [
+      "create_issue"
+    ],
+    "security-ops": [
+      "create_issue",
+      "disable_workflow"
+    ],
+    "vulnerability-scanner": [
+      "create_issue",
+      "open_pr"
+    ],
+    "iam": [
+      "create_issue",
+      "revoke_token"
+    ]
+  },
+  "severityThresholds": {
+    "rerun_workflow": "medium",
+    "trigger_vercel_redeploy": "high",
+    "purge_cloudflare_cache": "medium",
+    "patch_cloudflare_dns": "high",
+    "disable_workflow": "high",
+    "revoke_token": "critical"
+  },
+  "workflowAllowlist": [
+    "ci.yml",
+    "deploy.yml",
+    "flutter-ci.yml"
+  ],
+  "dnsAllowlist": [
+    "support.useaima.com",
+    "eva.useaima.com"
+  ]
+}

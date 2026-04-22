@@ -1,0 +1,23 @@
+{
+  "name": "useaima-ops-agents",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Operational agent platform for UseAima infrastructure.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp vitest run",
+    "agent:run": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp node --import tsx src/cli/run-agent.ts",
+    "agent:smoke": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp node --import tsx src/cli/smoke.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.4"
+  }
+}

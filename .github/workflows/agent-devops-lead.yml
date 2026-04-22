@@ -1,0 +1,32 @@
+name: Agent DevOps Lead
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npm run agent:run -- --agent devops-lead
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TEAM_ID: ${{ vars.VERCEL_TEAM_ID }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          AUTONOMY_MODE: ${{ vars.AUTONOMY_MODE }}
+          AGENT_KILL_SWITCH: ${{ vars.AGENT_KILL_SWITCH }}
+          ALERT_REPO: ${{ vars.ALERT_REPO }}
+          ALERT_REPO_OWNER: ${{ vars.ALERT_REPO_OWNER }}
+          VERCEL_PROJECT_EVA: ${{ vars.VERCEL_PROJECT_EVA }}
+          VERCEL_PROJECT_SUPPORT: ${{ vars.VERCEL_PROJECT_SUPPORT }}
+          VERCEL_PROJECT_USEAIMA_HUB: ${{ vars.VERCEL_PROJECT_USEAIMA_HUB }}

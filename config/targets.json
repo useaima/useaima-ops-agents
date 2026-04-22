@@ -1,0 +1,81 @@
+{
+  "github": [
+    {
+      "id": "eva-web",
+      "owner": "useaima",
+      "repo": "your-financial-compass-793803af",
+      "defaultBranch": "main"
+    },
+    {
+      "id": "support",
+      "owner": "useaima",
+      "repo": "aima-support",
+      "defaultBranch": "main"
+    },
+    {
+      "id": "hub",
+      "owner": "useaima",
+      "repo": "useaima-hub",
+      "defaultBranch": "main"
+    },
+    {
+      "id": "ops-agents",
+      "owner": "useaima",
+      "repo": "useaima-ops-agents",
+      "defaultBranch": "main"
+    }
+  ],
+  "vercel": [
+    {
+      "id": "eva",
+      "name": "eva",
+      "projectIdEnv": "VERCEL_PROJECT_EVA"
+    },
+    {
+      "id": "support",
+      "name": "support",
+      "projectIdEnv": "VERCEL_PROJECT_SUPPORT"
+    },
+    {
+      "id": "hub",
+      "name": "useaima-hub",
+      "projectIdEnv": "VERCEL_PROJECT_USEAIMA_HUB"
+    }
+  ],
+  "supabase": [
+    {
+      "id": "eva-prod",
+      "projectRef": "xskjeusygahhzdoufdyd",
+      "functions": [
+        "finance-core",
+        "chat",
+        "generate-insights",
+        "generate-statement",
+        "receipt-ingress",
+        "scheduled-summaries"
+      ]
+    }
+  ],
+  "cloudflare": [
+    {
+      "id": "useaima",
+      "zoneIdEnv": "CLOUDFLARE_ZONE_USEAIMA",
+      "zoneName": "useaima.com",
+      "expectedDnsRecords": [
+        {
+          "type": "CNAME",
+          "name": "support.useaima.com"
+        },
+        {
+          "type": "CNAME",
+          "name": "eva.useaima.com"
+        }
+      ]
+    },
+    {
+      "id": "blog",
+      "zoneIdEnv": "CLOUDFLARE_ZONE_BLOG",
+      "zoneName": "blog.useaima.com"
+    }
+  ]
+}
