@@ -1,10 +1,24 @@
 import { CloudflareConnector } from "../connectors/cloudflare.js";
 import { BaseAgent } from "../core/base-agent.js";
 import type { AgentContext } from "../core/base-agent.js";
+import { HttpError } from "../core/http.js";
 import type { AgentFinding } from "../core/types.js";
 
 function slug(value: string): string {
   return value.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase();
+}
+
+function describeError(error: unknown): string {
+  if (error instanceof HttpError) {
+    const detail = error.responseText.trim().slice(0, 240);
+    return `HTTP ${error.status}${detail ? `: ${detail}` : ""}`;
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Unknown provider error";
 }
 
 export class CloudflareSpecialistAgent extends BaseAgent {
@@ -26,7 +40,28 @@ export class CloudflareSpecialistAgent extends BaseAgent {
         continue;
       }
 
-      const dnsRecords = await connector.listDnsRecords(zoneId);
+      let dnsRecords;
+      try {
+        dnsRecords = await connector.listDnsRecords(zoneId);
+      } catch (error) {
+        findings.push({
+          id: `cloudflare-access-${slug(zone.zoneName)}`,
+          agent: this.name,
+          system: "cloudflare",
+          severity: "high",
+          title: `Cloudflare inspection failed for ${zone.zoneName}`,
+          summary: `The agent could not inspect DNS records for ${zone.zoneName}.`,
+          details: `Cloudflare API access failed while reading zone ${zone.zoneName}. ${describeError(error)}`,
+          detected_at: new Date().toISOString(),
+          dedupe_key: `cloudflare-access-${zone.zoneName}`,
+          metadata: {
+            zone: zone.zoneName,
+            zoneIdEnv: zone.zoneIdEnv
+          }
+        });
+        continue;
+      }
+
       for (const expected of zone.expectedDnsRecords ?? []) {
         const record = dnsRecords.find((item) => item.type === expected.type && item.name === expected.name);
         if (record) {

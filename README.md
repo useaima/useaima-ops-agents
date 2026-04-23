@@ -50,6 +50,9 @@ npm run agent:run -- --agent security-ops --mode dry-run
 
 Copy `.env.example` to `.env` and provide the provider tokens you want the platform to use. Missing provider secrets do not break the smoke check; they produce connector warnings instead of mutations.
 
+- `GITHUB_TOKEN` is enough for same-repo issue automation.
+- `USEAIMA_GITHUB_TOKEN` is the optional org-scoped token for cross-repo checks such as outside collaborators, Dependabot alerts, and workflow inspection across multiple UseAima repositories.
+
 ## Safety model
 
 - `AGENT_KILL_SWITCH=true` disables all autonomous actions.

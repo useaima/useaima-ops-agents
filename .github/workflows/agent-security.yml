@@ -27,7 +27,7 @@ jobs:
       - run: npm run agent:run -- --agent security-ops
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.USEAIMA_GITHUB_TOKEN != '' && secrets.USEAIMA_GITHUB_TOKEN || github.token }}
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           AUTONOMY_MODE: ${{ vars.AUTONOMY_MODE }}
           AGENT_KILL_SWITCH: ${{ vars.AGENT_KILL_SWITCH }}

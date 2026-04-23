@@ -1,7 +1,21 @@
 import { GitHubConnector } from "../connectors/github.js";
 import { BaseAgent } from "../core/base-agent.js";
 import type { AgentContext } from "../core/base-agent.js";
+import { HttpError } from "../core/http.js";
 import type { AgentFinding } from "../core/types.js";
+
+function describeError(error: unknown): string {
+  if (error instanceof HttpError) {
+    const detail = error.responseText.trim().slice(0, 240);
+    return `HTTP ${error.status}${detail ? `: ${detail}` : ""}`;
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Unknown GitHub API error";
+}
 
 export class IAMAgent extends BaseAgent {
   constructor() {
@@ -17,7 +31,27 @@ export class IAMAgent extends BaseAgent {
     }
 
     for (const repo of config.targets.github) {
-      const collaborators = await github.listOutsideCollaborators(repo);
+      let collaborators;
+      try {
+        collaborators = await github.listOutsideCollaborators(repo);
+      } catch (error) {
+        findings.push({
+          id: `iam-access-${repo.id}`,
+          agent: this.name,
+          system: "github",
+          severity: "medium",
+          title: `Unable to inspect collaborator access for ${repo.owner}/${repo.repo}`,
+          summary: `The agent could not verify outside collaborators for ${repo.owner}/${repo.repo}.`,
+          details: `GitHub API access failed while listing outside collaborators. This usually means the workflow token cannot inspect that repository or needs a broader org token. ${describeError(error)}`,
+          detected_at: new Date().toISOString(),
+          dedupe_key: `iam-access-${repo.owner}-${repo.repo}`,
+          metadata: {
+            repo: `${repo.owner}/${repo.repo}`
+          }
+        });
+        continue;
+      }
+
       for (const collaborator of collaborators) {
         findings.push({
           id: `iam-${repo.id}-${collaborator.login}`,
