@@ -4,6 +4,11 @@ import { BaseAgent } from "../core/base-agent.js";
 import type { AgentContext } from "../core/base-agent.js";
 import type { AgentFinding } from "../core/types.js";
 
+function isHealthyProjectStatus(status: string): boolean {
+  const normalized = status.toLowerCase();
+  return normalized === "active" || normalized.startsWith("active_") || normalized.includes("healthy");
+}
+
 export class FinOpsAgent extends BaseAgent {
   constructor() {
     super("finops");
@@ -52,7 +57,7 @@ export class FinOpsAgent extends BaseAgent {
       for (const target of config.targets.supabase) {
         const project = await supabase.getProject(target.projectRef);
         const status = `${project.status ?? project.project_status ?? "unknown"}`;
-        if (status.toLowerCase() === "active") {
+        if (isHealthyProjectStatus(status)) {
           continue;
         }
 
