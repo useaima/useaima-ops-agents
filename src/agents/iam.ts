@@ -17,6 +17,15 @@ function describeError(error: unknown): string {
   return "Unknown GitHub API error";
 }
 
+function isCrossRepoScopeUnavailable(repoFullName: string): boolean {
+  if (process.env.GITHUB_TOKEN_SOURCE !== "github-token") {
+    return false;
+  }
+
+  const alertRepo = [process.env.ALERT_REPO_OWNER, process.env.ALERT_REPO].filter(Boolean).join("/");
+  return !alertRepo || repoFullName !== alertRepo;
+}
+
 export class IAMAgent extends BaseAgent {
   constructor() {
     super("iam");
@@ -31,6 +40,11 @@ export class IAMAgent extends BaseAgent {
     }
 
     for (const repo of config.targets.github) {
+      const repoFullName = `${repo.owner}/${repo.repo}`;
+      if (isCrossRepoScopeUnavailable(repoFullName)) {
+        continue;
+      }
+
       let collaborators;
       try {
         collaborators = await github.listOutsideCollaborators(repo);
@@ -46,7 +60,7 @@ export class IAMAgent extends BaseAgent {
           detected_at: new Date().toISOString(),
           dedupe_key: `iam-access-${repo.owner}-${repo.repo}`,
           metadata: {
-            repo: `${repo.owner}/${repo.repo}`
+            repo: repoFullName
           }
         });
         continue;

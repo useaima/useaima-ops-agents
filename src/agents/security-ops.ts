@@ -23,8 +23,11 @@ export class SecurityOpsAgent extends BaseAgent {
       const opsRepo = config.targets.github.find((repo) => repo.id === "ops-agents");
       if (opsRepo) {
         const runs = await github.listWorkflowRuns(opsRepo);
-        const latestFailures = runs.filter((run) => run.conclusion === "failure").slice(0, 3);
-        if (latestFailures.length >= 3) {
+        const latestCompletedRuns = runs.filter((run) => run.status === "completed").slice(0, 3);
+        const latestFailures = latestCompletedRuns.filter(
+          (run) => run.conclusion === "failure" || run.conclusion === "startup_failure"
+        );
+        if (latestCompletedRuns.length >= 3 && latestFailures.length === latestCompletedRuns.length) {
           const findingId = makeKey("security-github", `${opsRepo.owner}-${opsRepo.repo}`);
           findings.push({
             id: findingId,

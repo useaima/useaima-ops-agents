@@ -22,7 +22,12 @@ export class DevOpsLeadAgent extends BaseAgent {
     if (github.isConfigured()) {
       for (const repo of config.targets.github) {
         const runs = await github.listWorkflowRuns(repo);
-        const failedRun = runs.find((run) => run.conclusion === "failure" || run.conclusion === "startup_failure");
+        const latestCompletedRun = runs.find((run) => run.status === "completed");
+        const failedRun =
+          latestCompletedRun &&
+          (latestCompletedRun.conclusion === "failure" || latestCompletedRun.conclusion === "startup_failure")
+            ? latestCompletedRun
+            : undefined;
         if (!failedRun) {
           continue;
         }

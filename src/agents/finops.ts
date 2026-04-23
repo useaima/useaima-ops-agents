@@ -22,8 +22,11 @@ export class FinOpsAgent extends BaseAgent {
         }
 
         const deployments = await vercel.listDeployments(projectId);
-        const recentFailures = deployments.filter((deployment) => deployment.readyState === "ERROR").length;
-        if (recentFailures < 2) {
+        const latestCompletedDeployments = deployments
+          .filter((deployment) => deployment.readyState !== "BUILDING" && deployment.readyState !== "QUEUED")
+          .slice(0, 3);
+        const recentFailures = latestCompletedDeployments.filter((deployment) => deployment.readyState === "ERROR").length;
+        if (latestCompletedDeployments.length < 2 || recentFailures < 2) {
           continue;
         }
 
