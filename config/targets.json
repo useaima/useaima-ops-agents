@@ -1,15 +1,9 @@
 {
   "github": [
     {
-      "id": "eva-web",
+      "id": "aima-blog",
       "owner": "useaima",
-      "repo": "your-financial-compass-793803af",
-      "defaultBranch": "main"
-    },
-    {
-      "id": "support",
-      "owner": "useaima",
-      "repo": "aima-support",
+      "repo": "aima-blog",
       "defaultBranch": "main"
     },
     {
@@ -19,30 +13,66 @@
       "defaultBranch": "main"
     },
     {
+      "id": "support",
+      "owner": "useaima",
+      "repo": "aima-support",
+      "defaultBranch": "main"
+    },
+    {
       "id": "ops-agents",
       "owner": "useaima",
       "repo": "useaima-ops-agents",
+      "defaultBranch": "main"
+    },
+    {
+      "id": "eva-web",
+      "owner": "useaima",
+      "repo": "your-financial-compass-793803af",
       "defaultBranch": "main"
     }
   ],
   "vercel": [
     {
-      "id": "eva",
-      "name": "eva",
-      "projectIdEnv": "VERCEL_PROJECT_EVA"
-    },
-    {
-      "id": "support",
-      "name": "support",
-      "projectIdEnv": "VERCEL_PROJECT_SUPPORT"
+      "id": "blog",
+      "name": "aima-blog",
+      "projectIdEnv": "VERCEL_PROJECT_AIMA_BLOG",
+      "domain": "blog.useaima.com"
     },
     {
       "id": "hub",
       "name": "useaima-hub",
-      "projectIdEnv": "VERCEL_PROJECT_USEAIMA_HUB"
+      "projectIdEnv": "VERCEL_PROJECT_USEAIMA_HUB",
+      "domain": "useaima.com"
+    },
+    {
+      "id": "support",
+      "name": "support",
+      "projectIdEnv": "VERCEL_PROJECT_SUPPORT",
+      "domain": "support.useaima.com"
+    },
+    {
+      "id": "eva",
+      "name": "eva",
+      "projectIdEnv": "VERCEL_PROJECT_EVA",
+      "domain": "eva.useaima.com"
     }
   ],
   "supabase": [
+    {
+      "id": "company-sites-shared",
+      "projectRef": "aeswccckvxntbhdmyewt",
+      "functions": [
+        "shared-settings",
+        "support-intake",
+        "crm-sync",
+        "media-sync"
+      ],
+      "repos": [
+        "aima-blog",
+        "useaima-hub",
+        "aima-support"
+      ]
+    },
     {
       "id": "eva-prod",
       "projectRef": "xskjeusygahhzdoufdyd",
@@ -53,6 +83,9 @@
         "generate-statement",
         "receipt-ingress",
         "scheduled-summaries"
+      ],
+      "repos": [
+        "your-financial-compass-793803af"
       ]
     }
   ],
@@ -64,18 +97,21 @@
       "expectedDnsRecords": [
         {
           "type": "CNAME",
+          "name": "useaima.com"
+        },
+        {
+          "type": "CNAME",
           "name": "support.useaima.com"
         },
         {
           "type": "CNAME",
           "name": "eva.useaima.com"
+        },
+        {
+          "type": "CNAME",
+          "name": "blog.useaima.com"
         }
       ]
-    },
-    {
-      "id": "blog",
-      "zoneIdEnv": "CLOUDFLARE_ZONE_BLOG",
-      "zoneName": "blog.useaima.com"
     }
   ]
 }

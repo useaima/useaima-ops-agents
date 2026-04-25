@@ -17,6 +17,28 @@ Every agent:
 - respects a global kill switch
 - acts only inside the supported action catalog
 
+## Current production topology
+
+The company-site stack is now split across dedicated repos:
+
+- `aima-blog` -> `blog.useaima.com`
+- `useaima-hub` -> `useaima.com`
+- `aima-support` -> `support.useaima.com`
+- `useaima-ops-agents` -> operational automation and inspection
+- `your-financial-compass-793803af` -> EVA product repo
+
+The shared company-site backend for the first CMS/CRM rollout is the Supabase project:
+
+- `aeswccckvxntbhdmyewt`
+
+That shared project is intended to back:
+
+- shared site settings
+- newsletter subscribers
+- support requests
+- CRM contacts and notes
+- blog CMS-related operational data
+
 ## Runtime
 
 - Node 22
@@ -52,6 +74,8 @@ Copy `.env.example` to `.env` and provide the provider tokens you want the platf
 
 - `GITHUB_TOKEN` is enough for same-repo issue automation.
 - `USEAIMA_GITHUB_TOKEN` is the optional org-scoped token for cross-repo checks such as outside collaborators, Dependabot alerts, and workflow inspection across multiple UseAima repositories.
+- `VERCEL_PROJECT_AIMA_BLOG` should point at the Vercel project serving `blog.useaima.com`.
+- `SHARED_SUPABASE_PROJECT_REF` should stay aligned with the company-sites Supabase project ref.
 
 ## Safety model
 
