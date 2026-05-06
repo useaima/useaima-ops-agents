@@ -14,10 +14,23 @@
     "agent:run": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp node --import tsx src/cli/run-agent.ts",
     "agent:smoke": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp node --import tsx src/cli/smoke.ts"
   },
+  "dependencies": {
+    "@ai-sdk/google": "^0.0.52",
+    "@ai-sdk/openai": "^0.0.66",
+    "@google/genai": "^0.1.1",
+    "@vercel/postgres": "^0.10.0",
+    "ai": "^3.4.1",
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.23.8"
+  },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241011.0",
     "@types/node": "^24.0.0",
     "tsx": "^4.20.0",
     "typescript": "^5.9.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^3.80.0"
   }
 }

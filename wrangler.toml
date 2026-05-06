@@ -1,0 +1,29 @@
+name = "useaima-ops-agents"
+main = "src/index.ts"
+compatibility_date = "2024-10-11"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+[[durable_objects.bindings]]
+name = "MASTER_ORCHESTRATOR"
+class_name = "MasterOrchestrator"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["MasterOrchestrator"]
+
+# Send Email Binding
+# https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
+send_email = [
+  { type = "send_email", name = "EMAIL_SENDER", destination_address = "mukabanealvins@gmail.com" }
+]
+
+[vars]
+# SENTRY_DSN = "..." (Provided via Secret)
+# GITHUB_APP_ID = "..." (Provided via Secret)
+# GITHUB_APP_PRIVATE_KEY = "..." (Provided via Secret)
+# GITHUB_WEBHOOK_SECRET = "..." (Provided via Secret)
+# SUPABASE_URL = "..." (Provided via Secret)
+# SUPABASE_SERVICE_ROLE_KEY = "..." (Provided via Secret)
