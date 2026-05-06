@@ -8,10 +8,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "lint": "tsc -p tsconfig.json --noEmit",
-    "test": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp vitest run",
-    "agent:run": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp node --import tsx src/cli/run-agent.ts",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "agent:smoke": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp node --import tsx src/cli/smoke.ts"
   },
   "dependencies": {
